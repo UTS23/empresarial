@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CSS desde CDN -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+	<!-- íconos Bootstrap 5 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+	<title>Panel Administrativo</title>
+</head>
+
+<style>
+	.custom-background {
+		background-image: url('/img/fondoUser.jpg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	/* Cambia el color de fondo del botón del acordeón cuando está abierto */
+	.custom-orange[aria-expanded="true"] {
+		background-color: rgb(236, 202, 100);
+		color: white;
+		/* Cambia el color del texto a blanco u otro que prefieras */
+	}
+
+	/* Cambia el color de fondo del botón del acordeón cuando está cerrado */
+	.custom-orange:not([aria-expanded="true"]) {
+		background-color: darkorange;
+		/* Cambia el color a lo que desees cuando está cerrado */
+		color: white;
+		/* Cambia el color del texto a blanco u otro que prefieras */
+	}
+
+	/* Cambia el color de fondo del botón del acordeón cuando está abierto */
+	.custom-orange2[aria-expanded="true"] {
+		background-color: rgb(255, 255, 255);
+		color: white;
+		/* Cambia el color del texto a blanco u otro que prefieras */
+	}
+
+	/* Cambia el color de fondo del botón del acordeón cuando está cerrado */
+	.custom-orange2:not([aria-expanded="true"]) {
+		background-color: rgb(192, 192, 192);
+		/* Cambia el color a lo que desees cuando está cerrado */
+		color: white;
+		/* Cambia el color del texto a blanco u otro que prefieras */
+	}
+
+	/* Badge con color basado en el puntaje */
+	.custom-badge {
+		padding: 5px 10px;
+		border-radius: 5px;
+		color: rgb(0, 0, 0);
+	}
+</style>
+
+<body class="custom-background">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <a href="/login" class="btn btn-dark btn-lg text-light m-2">Salir</a>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 text-center">
+                <div class="shadow-lg p-3 mb-5 bg-body rounded">
+                    <h2><strong>¡Bienvenido, [[${user.fullname}]]!</strong></h2>
+                </div>
+                <h6>[[${user.tipoDocumento}]]: [[${user.numDocumento}]]</h6>
+                <h6>Teléfono: [[${user.numTelefono}]]</h6>
+                <h6>Número de registro: [[${user.numRegister}]]</h6>
+                <h6>[[${user.email}]]</h6>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Selecciona una de las siguientes opciones para consultar tus datos:</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-12">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button custom-orange" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Puntaje Global
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>Tu puntaje global fue</strong>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <span class="badge rounded-pill custom-badge"
+                                        th:if="${user.PuntajeGlobal > 0 and user.PuntajeGlobal <= 125}"
+                                        style="background-color: rgb(255, 85, 85)">[[${user.puntajeNivelGlobal}]]
+                                        :</span>
+                                    <span class="badge rounded-pill custom-badge"
+                                        th:if="${user.PuntajeGlobal > 125 and user.PuntajeGlobal <= 155}"
+                                        style="background-color: rgb(128, 128, 255)">[[${user.puntajeNivelGlobal}]]
+                                        :</span>
+                                    <span class="badge rounded-pill custom-badge"
+                                        th:if="${user.PuntajeGlobal > 155 and user.PuntajeGlobal <= 190}"
+                                        style="background-color: rgb(244, 214, 89)">[[${user.puntajeNivelGlobal}]]
+                                        :</span>
+                                    <span class="badge rounded-pill custom-badge" th:if="${user.PuntajeGlobal > 190}"
+                                        style="background-color: rgb(22, 223, 0)">[[${user.puntajeNivelGlobal}]]
+                                        :</span>
+                                    <span class="badge rounded-pill custom-badge">[[${user.PuntajeGlobal}]]</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button custom-orange2 text-dark" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Puntaje de todas las asignaturas
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionExample">
+                            <!-- Agrega las secciones de asignaturas aquí -->
+                            
+                            <div class="accordion-body">
+								
+								<strong>Comunicación escrita</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.comunicacionEscrita > 0 and user.comunicacionEscrita <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.comunicacionEscritaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.comunicacionEscrita > 125 and user.comunicacionEscrita <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.comunicacionEscritaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.comunicacionEscrita > 155 and user.comunicacionEscrita <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.comunicacionEscritaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.comunicacionEscrita > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.comunicacionEscritaNivel}]]
+										: </span>
+									[[${user.comunicacionEscrita}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Razonamiento cuantitativo</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.razonamientoCuantitativo > 0 and user.razonamientoCuantitativo <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.razonamientoCuantitativoNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.razonamientoCuantitativo > 125 and user.razonamientoCuantitativo <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.razonamientoCuantitativoNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.razonamientoCuantitativo > 155 and user.razonamientoCuantitativo <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.razonamientoCuantitativoNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.razonamientoCuantitativo > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.razonamientoCuantitativoNivel}]]
+										: </span>
+									[[${user.razonamientoCuantitativo}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Lectura crítica</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.lecturaCritica > 0 and user.lecturaCritica <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.lecturaCriticaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.lecturaCritica > 125 and user.lecturaCritica <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.lecturaCriticaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.lecturaCritica > 155 and user.lecturaCritica <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.lecturaCriticaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.lecturaCritica > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.lecturaCriticaNivel}]]
+										: </span>
+									[[${user.lecturaCritica}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Competencias ciudadanas</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.competenciasCiudadanas > 0 and user.competenciasCiudadanas <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.competenciasCiudadanasNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.competenciasCiudadanas > 125 and user.competenciasCiudadanas <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.competenciasCiudadanasNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.competenciasCiudadanas > 155 and user.competenciasCiudadanas <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.competenciasCiudadanasNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.competenciasCiudadanas > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.competenciasCiudadanasNivel}]]
+										: </span>
+									[[${user.competenciasCiudadanas}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Inglés</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.ingles > 0 and user.ingles <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.inglesNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.ingles > 125 and user.ingles <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.inglesNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.ingles > 155 and user.ingles <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.inglesNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.ingles > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.inglesNivel}]]
+										: </span>
+									[[${user.ingles}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Formulación de proyectos de Ingeniería</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.proyectosIngenieria > 0 and user.proyectosIngenieria <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.proyectosIngenieriaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.proyectosIngenieria > 125 and user.proyectosIngenieria <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.proyectosIngenieriaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.proyectosIngenieria > 155 and user.proyectosIngenieria <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.proyectosIngenieriaNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.proyectosIngenieria > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.proyectosIngenieriaNivel}]]
+										: </span>
+									[[${user.proyectosIngenieria}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Pensamiento matemático</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.pensamientoMatematico > 0 and user.pensamientoMatematico <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.pensamientoMatematicoNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.pensamientoMatematico > 125 and user.pensamientoMatematico <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.pensamientoMatematicoNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.pensamientoMatematico > 155 and user.pensamientoMatematico <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.pensamientoMatematicoNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.pensamientoMatematico > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.pensamientoMatematicoNivel}]]
+										: </span>
+									[[${user.pensamientoMatematico}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Diseño de software</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.disenhoSoftware > 0 and user.disenhoSoftware <= 125}"
+										style="background-color: rgb(255, 85, 85)">[[${user.disenhoSoftwareNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.disenhoSoftware > 125 and user.disenhoSoftware <= 155}"
+										style="background-color: rgb(128, 128, 255)">[[${user.disenhoSoftwareNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge"
+										th:if="${user.disenhoSoftware > 155 and user.disenhoSoftware <= 190}"
+										style="background-color: rgb(244, 214, 89)">[[${user.disenhoSoftwareNivel}]]
+										: </span>
+									<span class="badge rounded-pill custom-badge" th:if="${user.disenhoSoftware > 190}"
+										style="background-color: rgb(22, 223, 0)">[[${user.disenhoSoftwareNivel}]]
+										: </span>
+									[[${user.disenhoSoftware}]]
+								</div>
+							</div>
+							
+							<div class="accordion-body">
+								<strong>Nivel del inglés</strong>
+								<div>
+									<span class="badge rounded-pill custom-badge"
+										>[[${user.nivelDeIngles}]]
+										</span>
+								</div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+		<!-- ====================================================================================================== -->
+		<!-- Scripts de Bootstrap y otros scripts personalizados -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR4g5g6j5q72ovIL5uy4ve5g7F5w5F5F5F5F5F5F5"
+			crossorigin="anonymous"></script>
+
+		<!-- Popper.js desde CDN (necesario para Bootstrap) -->
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@2.10.2/dist/umd/popper.min.js"></script>
+
+		<!-- Bootstrap JS desde CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            color: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <div class="form-container">
+                    <h1 class="title" th:text="${producto.id == null} ? 'Crear Producto' : 'Actualizar Producto'"></h1>
+                    <form th:action="@{/api/productos/guardar}" th:object="${producto}" method="post" id="productForm" enctype="multipart/form-data">
+                        <div class="field">
+                            <label class="label">Nombre del Producto</label>
+                            <div class="control">
+                                <input class="input" type="text" th:field="*{nombre}" placeholder="Ingrese el nombre del producto" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Precio</label>
+                            <div class="control">
+                                <input class="input" type="number" th:field="*{precio}" placeholder="Ingrese el precio del producto" required>
+                            </div>
+                        </div>
+
+                      
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <button class="button is-link" type="submit">Guardar</button>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-light" type="reset">Cancelar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function(){
+                var dataURL = reader.result;
+                var output = document.getElementById('imagenPreview');
+                output.src = dataURL;
+                output.style.display = 'block'; // Mostrar la imagen previa
+                // Convertir la imagen a base64 y actualizar el campo oculto
+                var base64Image = dataURL.split(',')[1];
+                document.getElementById('imagenBase64').value = base64Image;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+    }
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .login-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-control {
+        min-height: 38px;
+        border-radius: 3px;
+        box-shadow: none !important;
+    }
+    .btn-login {
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #ff6f00;
+        border: none;
+        border-radius: 3px;
+        min-width: 140px;
+    }
+    .btn-login:hover, .btn-login:focus {
+        background-color: #e65c00;
+    }
+    .forgot-link {
+        text-align: right;
+        font-size: 13px;
+    }
+    .forgot-link a {
+        color: #666;
+    }
+    .social-login {
+        margin-top: 30px;
+    }
+    .social-login h4 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .social-login .g-signin2 {
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginAdmin" action="login" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Contraseña" required="required">
+        </div>
+        <div class="form-group">                        
+            <button type="submit" class="btn btn-primary btn-block btn-login">Iniciar Sesión</button>
+        </div>
+        <div class="form-group forgot-link">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
+    </form>
+    
+</div>  
+
+</body>
+</html>
